@@ -93,10 +93,10 @@ export const registerController = async (req, res) => {
             }
         })
     } catch (error) {
-        console.log(error)
+        console.error("Register Error ❌:", error);
         res.status(500).json({
             success: false,
-            message: "Something went wrong"
+            message: "Registration failed. Please try again later."
         })
     }
 }
@@ -233,10 +233,11 @@ export const resetPasswordLinkController = async (req, res) => {
             message: "Reset password link sent successfully ✅"
         })
     } catch (error) {
+        console.error("Reset Password Link Error ❌:", error);
         return res.status(500)
             .json({
                 success: false,
-                message: "Something went wrong"
+                message: error.message || "Failed to send reset link"
             })
     }
 }
@@ -368,9 +369,10 @@ export const verifyEmailController = async (req, res) => {
         `
         return res.status(200).send(html)
     } catch (error) {
+        console.error("Verify Email Error ❌:", error);
         return res.status(500).json({
             success: false,
-            message: "Something went wrong"
+            message: "Something went wrong during email verification"
         })
     }
 }
@@ -458,9 +460,10 @@ export const resendVerificationEmailController = async (req, res) => {
             message: "Verification email sent successfully ✅"
         })
     } catch (error) {
+        console.error("Resend Verification Error ❌:", error);
         return res.status(500).json({
             success: false,
-            message: "Something went wrong"
+            message: error.message || "Failed to resend verification email"
         })
     }
 }
