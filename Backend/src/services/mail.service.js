@@ -9,6 +9,9 @@ const transporter = nodemailer.createTransport({
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
     },
+    tls: {
+        rejectUnauthorized: false
+    }
 })
 
 transporter.verify()
@@ -29,8 +32,19 @@ export async function sendEmail({ to, subject, html, text }) {
             text
         };
 
-        const details = await transporter.sendMail(mailOptions);
+        // const details = await transporter.sendMail(mailOptions);
         // console.log("Email sent successfully ✅:", details);
+        await new Promise((resolve, reject) => {
+            transporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                    console.error("Failed to send email ❌:", err.message);
+                    reject(err);
+                } else {
+                    console.log("Email sent successfully ✅:", info);
+                    resolve(info);
+                }
+            })
+        })
     } catch (error) {
         console.error("Failed to send email ❌:", error.message);
         throw error;
