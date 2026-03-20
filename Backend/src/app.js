@@ -5,6 +5,7 @@ import chatRoutes from "./routes/chat.routes.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
+import cors from "cors";
 
 const app = express();
 
@@ -12,6 +13,10 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+app.use(cors({
+    origin: "*",
+    credentials: true
+}));
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
