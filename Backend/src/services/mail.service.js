@@ -1,9 +1,7 @@
 import nodemailer from "nodemailer"
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    service: "gmail",
     auth: {
         type: 'OAuth2',
         user: process.env.GOOGLE_USER,
@@ -11,12 +9,15 @@ const transporter = nodemailer.createTransport({
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
     },
-    family: 4
 })
 
 transporter.verify()
-    .then(() => console.log("Email service is ready to sent emails ✅"))
-    .catch((err) => console.log("Email Service Verification Error ❌:", err.message))
+    .then(() => console.log("Email service is ready to send emails ✅"))
+    .catch((err) => {
+        console.error("Email Service Verification Error ❌");
+        console.error("Message:", err.message);
+        console.error("Check your GOOGLE_REFRESH_TOKEN and OAuth2 settings.");
+    })
 
 export async function sendEmail({ to, subject, html, text }) {
     try {
