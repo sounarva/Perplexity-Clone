@@ -5,7 +5,7 @@ const chatSlice = createSlice({
     initialState: {
         chats: {},
         currentChatId: null,
-        isDarkMode: false,
+        isDarkMode: true,
         loading: false,
         error: null,
     },

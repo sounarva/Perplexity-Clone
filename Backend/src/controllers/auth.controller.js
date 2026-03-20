@@ -61,7 +61,7 @@ export const registerController = async (req, res) => {
                         </p>
 
                         <div style="text-align: center; margin-bottom: 35px;">
-                            <a href="http://localhost:3000/api/v1/auth/verify-email?token=${emailVerificationToken}" 
+                            <a href="${process.env.BACKEND_URI}/api/v1/auth/verify-email?token=${emailVerificationToken}" 
                                style="background-color: #1a8cd8; color: #ffffff; padding: 14px 30px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block;">
                                Verify My Email
                             </a>
@@ -159,10 +159,10 @@ export const loginController = async (req, res) => {
     }
 }
 
-export const resetPasswordLinkController = async (req , res) => {
+export const resetPasswordLinkController = async (req, res) => {
     try {
-        const {email} = req.body
-        if(!email){
+        const { email } = req.body
+        if (!email) {
             return res.status(400).json({
                 success: false,
                 message: "Email is required"
@@ -172,7 +172,7 @@ export const resetPasswordLinkController = async (req , res) => {
         const user = await userModel.findOne({
             email
         })
-        if(!user){
+        if (!user) {
             return res.status(404).json({
                 success: false,
                 message: "User not found"
@@ -211,7 +211,7 @@ export const resetPasswordLinkController = async (req , res) => {
                         </p>
 
                         <div style="text-align: center; margin-bottom: 35px;">
-                            <a href="http://localhost:5173/reset-password?token=${resetPasswordToken}" 
+                            <a href="${process.env.FRONTEND_URI}/reset-password?token=${resetPasswordToken}" 
                                style="background-color: #1a8cd8; color: #ffffff; padding: 14px 30px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block;">
                                Reset My Password
                             </a>
@@ -234,10 +234,10 @@ export const resetPasswordLinkController = async (req , res) => {
         })
     } catch (error) {
         return res.status(500)
-        .json({
-            success: false,
-            message: "Something went wrong"
-        })
+            .json({
+                success: false,
+                message: "Something went wrong"
+            })
     }
 }
 
@@ -272,10 +272,10 @@ export const resetPasswordController = async (req, res) => {
         });
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
-             return res.status(401).json({
-                 success: false,
-                 message: "Reset link has expired"
-             });
+            return res.status(401).json({
+                success: false,
+                message: "Reset link has expired"
+            });
         }
         return res.status(500).json({
             success: false,
@@ -345,7 +345,7 @@ export const verifyEmailController = async (req, res) => {
                         </div>
                         <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #ffffff;">Already Verified!</h1>
                         <p style="color: #94a3b8; font-size: 16px; margin-bottom: 32px;">Your email has already been verified. You're all set to go!</p>
-                        <a href="http://localhost:5173/login" style="display: block; background-color: #1a8cd8; color: #ffffff; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s;">Go to Login</a>
+                        <a href="${process.env.FRONTEND_URI}/login" style="display: block; background-color: #1a8cd8; color: #ffffff; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s;">Go to Login</a>
                     </div>
                 </div>
             `
@@ -362,7 +362,7 @@ export const verifyEmailController = async (req, res) => {
                     </div>
                     <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #ffffff;">Email Verified!</h1>
                     <p style="color: #94a3b8; font-size: 16px; margin-bottom: 32px;">Success! Your email has been verified. Welcome to the future of search.</p>
-                    <a href="http://localhost:5173/login" style="display: block; background-color: #1a8cd8; color: #ffffff; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s;">Go to Login</a>
+                    <a href="${process.env.FRONTEND_URI}/login" style="display: block; background-color: #1a8cd8; color: #ffffff; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s;">Go to Login</a>
                 </div>
             </div>
         `
@@ -432,7 +432,7 @@ export const resendVerificationEmailController = async (req, res) => {
                         </p>
 
                         <div style="text-align: center; margin-bottom: 35px;">
-                            <a href="http://localhost:3000/api/v1/auth/verify-email?token=${emailVerificationToken}" 
+                            <a href="${process.env.BACKEND_URI}/api/v1/auth/verify-email?token=${emailVerificationToken}" 
                                style="background-color: #1a8cd8; color: #ffffff; padding: 14px 30px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block;">
                                Verify My Email
                             </a>
