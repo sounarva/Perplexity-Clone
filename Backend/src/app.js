@@ -18,14 +18,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ static serve
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("./public"));
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/chat", chatRoutes);
 
 // ✅ fallback route (React)
-app.get("*name", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+app.use("*name", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/index.html"))
+})
 
 export default app;
