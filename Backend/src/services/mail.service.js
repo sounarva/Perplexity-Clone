@@ -1,45 +1,32 @@
 import nodemailer from "nodemailer"
-import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+    host: "smtp-relay.brevo.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+    },
+});
 
-// const transporter = nodemailer.createTransport({
-//     service: "gmail",
-//     auth: {
-//         type: 'OAuth2',
-//         user: process.env.GOOGLE_USER,
-//         clientId: process.env.GOOGLE_CLIENT_ID,
-//         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//         refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
-//     },
-//     tls: {
-//         rejectUnauthorized: false
-//     }
-// })
+transporter.verify()
+    .then(() => console.log("Email service is ready to send emails ✅"))
+    .catch((err) => {
+        console.error("Email Service Verification Error ❌");
+        console.error("Message:", err.message);
+    })
 
-// transporter.verify()
-//     .then(() => console.log("Email service is ready to send emails ✅"))
-//     .catch((err) => {
-//         console.error("Email Service Verification Error ❌");
-//         console.error("Message:", err.message);
-//         console.error("Check your GOOGLE_REFRESH_TOKEN and OAuth2 settings.");
-//     })
-
-export async function sendEmail({ to, subject, html, text }) {
+export async function sendEmail({ to, subject, html }) {
     try {
-        // const mailOptions = {
-        //     from: process.env.GOOGLE_USER,
-        //     to,
-        //     subject,
-        //     html,
-        // };
-
-        const { data, error } = await resend.emails.send({
-            from: "onboarding@resend.dev",
+        const mailOptions = {
+            from: process.env.SENDER_EMAIL,
             to,
             subject,
             html,
-        });
+        };
+
+        const { data, error } = await transporter.sendMail(mailOptions);
 
         if (error) {
             console.error("Failed to send email ❌:", error);
