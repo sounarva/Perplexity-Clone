@@ -367,6 +367,7 @@ const Dashboard = () => {
 
     const handleLogout = async () => {
         await logout()
+        dispatch(setCurrentChatId(null))
         setIsLogoutModalOpen(false)
         navigate("/login")
     }
