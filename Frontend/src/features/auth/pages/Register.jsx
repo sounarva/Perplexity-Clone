@@ -188,7 +188,7 @@ const Register = () => {
 
       <div className="text-center py-6 text-xs text-gray-600 font-medium tracking-wide">
         POWERED BY PERPLEXITY AI<br />
-        <span className="font-normal mt-2 block opacity-70">© 2024 Perplexity AI, Inc. All rights reserved.</span>
+        <span className="font-normal mt-2 block opacity-70">© 2026 Perplexity AI, Inc. All rights reserved.</span>
       </div>
     </div>
   );
