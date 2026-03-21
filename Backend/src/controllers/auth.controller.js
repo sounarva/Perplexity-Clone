@@ -356,17 +356,30 @@ export const verifyEmailController = async (req, res) => {
         user.isVerified = true
         await user.save()
         const html = `
-            <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; height: 100vh; display: flex; align-items: center; justify-content: center; color: #ffffff; margin: 0;">
-                <div style="max-width: 400px; width: 100%; margin: auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 40px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
-                    <div style="width: 64px; height: 64px; background: rgba(52, 211, 153, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
-                        <span style="font-size: 32px;">🎉</span>
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Email Verified</title>
+                <style>
+                    body, html { margin: 0; padding: 0; height: 100%; background-color: #0d1117; }
+                </style>
+            </head>
+            <body>
+                <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #ffffff; margin: 0; padding: 20px; box-sizing: border-box;">
+                    <div style="max-width: 400px; width: 100%; margin: auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 40px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); box-sizing: border-box;">
+                        <div style="width: 64px; height: 64px; background: rgba(52, 211, 153, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+                            <span style="font-size: 32px;">🎉</span>
+                        </div>
+                        <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #ffffff;">Email Verified!</h1>
+                        <p style="color: #94a3b8; font-size: 16px; margin-bottom: 32px;">Success! Your email has been verified. Welcome to the future of search.</p>
+                        <a href="${process.env.FRONTEND_URI}/login" style="display: block; background-color: #1a8cd8; color: #ffffff; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s;">Go to Login</a>
                     </div>
-                    <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #ffffff;">Email Verified!</h1>
-                    <p style="color: #94a3b8; font-size: 16px; margin-bottom: 32px;">Success! Your email has been verified. Welcome to the future of search.</p>
-                    <a href="${process.env.FRONTEND_URI}/login" style="display: block; background-color: #1a8cd8; color: #ffffff; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s;">Go to Login</a>
                 </div>
-            </div>
-        `
+            </body>
+            </html>
+        `;
         return res.status(200).send(html)
     } catch (error) {
         console.error("Verify Email Error ❌:", error);
