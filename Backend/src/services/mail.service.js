@@ -2,12 +2,15 @@ import nodemailer from "nodemailer"
 
 const transporter = nodemailer.createTransport({
     host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
     },
+    tls: {
+        rejectUnauthorized: false
+    }
 });
 
 transporter.verify()
@@ -15,7 +18,8 @@ transporter.verify()
     .catch((err) => {
         console.error("Email Service Verification Error ❌");
         console.error("Message:", err.message);
-    })
+        console.error("Full error:", err);
+    });
 
 export async function sendEmail({ to, subject, html }) {
     try {
@@ -26,14 +30,9 @@ export async function sendEmail({ to, subject, html }) {
             html,
         };
 
-        const { data, error } = await transporter.sendMail(mailOptions);
-
-        if (error) {
-            console.error("Failed to send email ❌:", error);
-            throw error;
-        }
-
-        console.log("Email sent successfully ✅:", data);
+        const info = await transporter.sendMail(mailOptions);
+        console.log("Email sent successfully ✅:", info.messageId);
+        return info;
     } catch (error) {
         console.error("Failed to send email ❌:", error);
         throw error;
