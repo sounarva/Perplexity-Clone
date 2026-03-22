@@ -153,7 +153,7 @@ const Sidebar = ({ user, chats, getMessagesAPI, setIsLogoutModalOpen, editChatAP
                                 <rect x="2" y="3" width="12" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
                             </svg>
                             <span className="truncate flex-1">{chat.title}</span>
-                            <div className="shrink-0 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="shrink-0 flex items-center gap-1 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button
                                     className={`p-1.5 rounded-md transition-colors cursor-pointer ${isDarkMode ? 'text-gray-400 hover:text-white hover:bg-white/10' : 'text-gray-400 hover:text-gray-900 hover:bg-black/10'}`}
                                     onClick={(e) => handleChatEdit(e, chat.id)}
@@ -455,7 +455,7 @@ const Dashboard = () => {
     }
 
     return (
-        <div className={`dashboard-container flex flex-col h-screen w-full overflow-hidden transition-colors duration-0 ${isDarkMode ? 'bg-[#0f1923]' : 'bg-[#ffffff]'}`}>
+        <div className={`dashboard-container flex flex-col h-dvh w-full overflow-hidden transition-colors duration-0 ${isDarkMode ? 'bg-[#0f1923]' : 'bg-[#ffffff]'}`}>
             {/* Mobile Top Bar */}
             <nav className={`mobile-top-bar w-full shrink-0 flex items-center justify-between px-4 py-3 border-b md:hidden ${isDarkMode ? 'bg-[#0f1923] border-white/5' : 'bg-[#ffffff] border-black/5'}`}>
                 <div className="flex items-center gap-3">
