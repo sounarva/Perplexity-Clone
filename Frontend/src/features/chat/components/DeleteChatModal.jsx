@@ -23,7 +23,7 @@ const DeleteChatModal = ({ onClose, onDelete }) => {
 
             {/* Modal Card */}
             <div
-                className={`relative w-full max-w-sm mx-4 border rounded-2xl shadow-2xl p-6 text-center transition-all duration-300 ${isDarkMode ? 'bg-[#151c28] border-white/10 shadow-black/50' : 'bg-white border-black/10 shadow-[0_0_40px_-5px_rgba(0,0,0,0.1)]'}`}
+                className={`relative w-[90%] max-w-[320px] border rounded-2xl shadow-2xl p-5 md:p-6 text-center transition-all duration-300 ${isDarkMode ? 'bg-[#151c28] border-white/10 shadow-black/50' : 'bg-white border-black/10 shadow-[0_0_40px_-5px_rgba(0,0,0,0.1)]'}`}
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Red Icon */}
@@ -38,10 +38,10 @@ const DeleteChatModal = ({ onClose, onDelete }) => {
                 </div>
 
                 {/* Title */}
-                <h2 className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Delete Chat?</h2>
+                <h2 className={`text-base font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Delete Chat?</h2>
 
                 {/* Description */}
-                <p className={`text-sm mb-6 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className={`text-[13px] leading-relaxed mb-6 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     Are you sure you want to delete this chat? This action cannot be undone.
                 </p>
 
@@ -49,7 +49,7 @@ const DeleteChatModal = ({ onClose, onDelete }) => {
                 <button
                     onClick={handleDelete}
                     disabled={deleting}
-                    className={`w-full py-2.5 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors cursor-pointer mb-3 ${deleting ? 'opacity-50 pointer-events-none' : ''}`}
+                    className={`w-full py-2.5 text-[13px] font-medium text-white bg-red-500 hover:bg-red-600 rounded-xl transition-colors cursor-pointer mb-2 ${deleting ? 'opacity-50 pointer-events-none' : ''}`}
                 >
                     {deleting ? 'Deleting...' : 'Delete'}
                 </button>
@@ -58,7 +58,7 @@ const DeleteChatModal = ({ onClose, onDelete }) => {
                 <button
                     onClick={onClose}
                     disabled={deleting}
-                    className={`w-full py-2 text-sm transition-colors cursor-pointer ${isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'} ${deleting ? 'opacity-50 pointer-events-none' : ''}`}
+                    className={`w-full py-2 text-[13px] font-medium transition-colors cursor-pointer ${isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'} ${deleting ? 'opacity-50 pointer-events-none' : ''}`}
                 >
                     Cancel
                 </button>

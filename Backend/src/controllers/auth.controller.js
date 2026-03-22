@@ -39,46 +39,54 @@ export const registerController = async (req, res) => {
             to: email,
             subject: "Welcome to Perplexity! 🤖",
             html: `
-                <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; padding: 40px 20px; color: #ffffff; line-height: 1.6;">
-                    <div style="max-width: 500px; margin: 0 auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 40px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);">
-                        <div style="text-align: center; margin-bottom: 30px;">
-                            <div style="display: inline-flex; align-items: center; gap: 10px;">
-                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #22d3ee, #34d399); border-radius: 50%; display: inline-block; vertical-align: middle; line-height: 40px; text-align: center;">
-                                    <span style="font-size: 20px;">🤖</span>
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body style="margin: 0; padding: 0; background-color: #0d1117;">
+                    <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; padding: 20px; color: #ffffff; line-height: 1.6;">
+                        <div style="max-width: 500px; width: 100%; margin: 0 auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); box-sizing: border-box;">
+                            <div style="text-align: center; margin-bottom: 25px;">
+                                <div style="display: inline-flex; align-items: center; gap: 8px;">
+                                    <div style="width: 36px; height: 36px; background: linear-gradient(135deg, #22d3ee, #34d399); border-radius: 50%; display: inline-block; vertical-align: middle; line-height: 36px; text-align: center;">
+                                        <span style="font-size: 18px;">🤖</span>
+                                    </div>
+                                    <span style="font-size: 20px; font-weight: 700; color: #ffffff; margin-left: 8px; vertical-align: middle;">Perplexity</span>
                                 </div>
-                                <span style="font-size: 24px; font-weight: 700; color: #ffffff; margin-left: 10px; vertical-align: middle;">Perplexity</span>
+                            </div>
+
+                            <h1 style="font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #ffffff; text-align: center;">Welcome, ${username}! 🤵</h1>
+                            
+                            <p style="color: #94a3b8; font-size: 15px; margin-bottom: 25px; text-align: center;">
+                                Thank you for joining <strong>Perplexity</strong>. We're thrilled to have you as part of our community of explorers and thinkers. 😍
+                            </p>
+
+                            <p style="color: #94a3b8; font-size: 15px; margin-bottom: 30px; text-align: center;">
+                                To get started, please verify your email address by clicking the button below:
+                            </p>
+
+                            <div style="text-align: center; margin-bottom: 30px;">
+                                <a href="${process.env.BACKEND_URI}/api/v1/auth/verify-email?token=${emailVerificationToken}" 
+                                   style="background-color: #1a8cd8; color: #ffffff; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 15px; display: inline-block; width: 80%; max-width: 250px; box-sizing: border-box;">
+                                   Verify My Email
+                                </a>
+                            </div>
+
+                            <div style="border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 25px; margin-top: 25px;">
+                                <p style="color: #64748b; font-size: 14px; text-align: center; margin: 0;">
+                                    Best regards,<br>
+                                    <strong>The Perplexity Team</strong> 💕
+                                </p>
                             </div>
                         </div>
-
-                        <h1 style="font-size: 22px; font-weight: 600; margin-bottom: 20px; color: #ffffff;">Welcome, ${username}! 🤵</h1>
                         
-                        <p style="color: #94a3b8; font-size: 16px; margin-bottom: 25px;">
-                            Thank you for joining <strong>Perplexity</strong>. We're thrilled to have you as part of our community of explorers and thinkers. 😍
-                        </p>
-
-                        <p style="color: #94a3b8; font-size: 16px; margin-bottom: 30px;">
-                            To get started, please verify your email address by clicking the button below:
-                        </p>
-
-                        <div style="text-align: center; margin-bottom: 35px;">
-                            <a href="${process.env.BACKEND_URI}/api/v1/auth/verify-email?token=${emailVerificationToken}" 
-                               style="background-color: #1a8cd8; color: #ffffff; padding: 14px 30px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block;">
-                               Verify My Email
-                            </a>
-                        </div>
-
-                        <div style="border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 25px; margin-top: 30px;">
-                            <p style="color: #64748b; font-size: 14px; margin-top: 25px;">
-                                Best regards,<br>
-                                <strong>The Perplexity Team</strong> 💕
-                            </p>
+                        <div style="text-align: center; margin-top: 20px; color: #4b5563; font-size: 12px;">
+                            © ${new Date().getFullYear()} Perplexity AI. All rights reserved.
                         </div>
                     </div>
-                    
-                    <div style="text-align: center; margin-top: 25px; color: #4b5563; font-size: 12px;">
-                        © ${new Date().getFullYear()} Perplexity AI. All rights reserved.
-                    </div>
-                </div>
+                </body>
+                </html>
             `
         })
 
@@ -189,42 +197,54 @@ export const resetPasswordLinkController = async (req, res) => {
             to: email,
             subject: "Reset Password 🔐",
             html: `
-                <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; padding: 40px 20px; color: #ffffff; line-height: 1.6;">
-                    <div style="max-width: 500px; margin: 0 auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 40px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);">
-                        <div style="text-align: center; margin-bottom: 30px;">
-                            <div style="display: inline-flex; align-items: center; gap: 10px;">
-                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #22d3ee, #34d399); border-radius: 50%; display: inline-block; vertical-align: middle; line-height: 40px; text-align: center;">
-                                    <span style="font-size: 20px;">🔐</span>
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body style="margin: 0; padding: 0; background-color: #0d1117;">
+                    <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; padding: 20px; color: #ffffff; line-height: 1.6;">
+                        <div style="max-width: 500px; width: 100%; margin: 0 auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); box-sizing: border-box;">
+                            <div style="text-align: center; margin-bottom: 25px;">
+                                <div style="display: inline-flex; align-items: center; gap: 8px;">
+                                    <div style="width: 36px; height: 36px; background: linear-gradient(135deg, #22d3ee, #34d399); border-radius: 50%; display: inline-block; vertical-align: middle; line-height: 36px; text-align: center;">
+                                        <span style="font-size: 18px;">🔐</span>
+                                    </div>
+                                    <span style="font-size: 20px; font-weight: 700; color: #ffffff; margin-left: 8px; vertical-align: middle;">Perplexity</span>
                                 </div>
-                                <span style="font-size: 24px; font-weight: 700; color: #ffffff; margin-left: 10px; vertical-align: middle;">Perplexity</span>
+                            </div>
+
+                            <h1 style="font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #ffffff; text-align: center;">Reset Your Password, ${user.username}! 🤵</h1>
+                            
+                            <p style="color: #94a3b8; font-size: 15px; margin-bottom: 25px; text-align: center;">
+                                We received a request to reset your password. If you didn't make this request, you can safely ignore this email.
+                            </p>
+
+                            <p style="color: #94a3b8; font-size: 15px; margin-bottom: 30px; text-align: center;">
+                                Otherwise, click the button below to set a new password. This link will expire in 15 minutes.
+                            </p>
+
+                            <div style="text-align: center; margin-bottom: 30px;">
+                                <a href="${process.env.FRONTEND_URI}/reset-password?token=${resetPasswordToken}" 
+                                   style="background-color: #1a8cd8; color: #ffffff; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 15px; display: inline-block; width: 80%; max-width: 250px; box-sizing: border-box;">
+                                   Reset Password
+                                </a>
+                            </div>
+
+                            <div style="border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 25px; margin-top: 25px;">
+                                <p style="color: #64748b; font-size: 14px; text-align: center; margin: 0;">
+                                    Best regards,<br>
+                                    <strong>The Perplexity Team</strong> 💕
+                                </p>
                             </div>
                         </div>
-
-                        <h1 style="font-size: 22px; font-weight: 600; margin-bottom: 20px; color: #ffffff;">Reset Your Password, ${user.username}! 🤵</h1>
                         
-                        <p style="color: #94a3b8; font-size: 16px; margin-bottom: 25px;">
-                            We received a request to reset your password. If you didn't make this request, you can safely ignore this email.
-                        </p>
-
-                        <p style="color: #94a3b8; font-size: 16px; margin-bottom: 30px;">
-                            Otherwise, click the button below to set a new password. This link will expire in 15 minutes.
-                        </p>
-
-                        <div style="text-align: center; margin-bottom: 35px;">
-                            <a href="${process.env.FRONTEND_URI}/reset-password?token=${resetPasswordToken}" 
-                               style="background-color: #1a8cd8; color: #ffffff; padding: 14px 30px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block;">
-                               Reset My Password
-                            </a>
-                        </div>
-
-                        <div style="border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 25px; margin-top: 30px;">
-                            <p style="color: #64748b; font-size: 14px; margin-top: 25px;">
-                                Best regards,<br>
-                                <strong>The Perplexity Team</strong> 💕
-                            </p>
+                        <div style="text-align: center; margin-top: 20px; color: #4b5563; font-size: 12px;">
+                            © ${new Date().getFullYear()} Perplexity AI. All rights reserved.
                         </div>
                     </div>
-                </div>
+                </body>
+                </html>
             `
         })
 
@@ -339,16 +359,29 @@ export const verifyEmailController = async (req, res) => {
 
         if (user.isVerified) {
             const html = `
-                <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; height: 100vh; display: flex; align-items: center; justify-center; color: #ffffff; margin: 0;">
-                    <div style="max-width: 400px; width: 100%; margin: auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 40px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
-                        <div style="width: 64px; height: 64px; background: rgba(52, 211, 153, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
-                            <span style="font-size: 32px;">✅</span>
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Already Verified</title>
+                    <style>
+                        body, html { margin: 0; padding: 0; min-height: 100vh; background-color: #0d1117; }
+                    </style>
+                </head>
+                <body>
+                    <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #ffffff; padding: 20px; box-sizing: border-box;">
+                        <div style="max-width: 400px; width: 100%; margin: auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px 20px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); box-sizing: border-box;">
+                            <div style="width: 56px; height: 56px; background: rgba(52, 211, 153, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                                <span style="font-size: 28px;">✅</span>
+                            </div>
+                            <h1 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; color: #ffffff;">Already Verified!</h1>
+                            <p style="color: #94a3b8; font-size: 15px; margin-bottom: 28px;">Your email has already been verified. You're all set to go!</p>
+                            <a href="${process.env.FRONTEND_URI}/login" style="display: block; background-color: #1a8cd8; color: #ffffff; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 15px; transition: opacity 0.2s;">Go to Login</a>
                         </div>
-                        <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #ffffff;">Already Verified!</h1>
-                        <p style="color: #94a3b8; font-size: 16px; margin-bottom: 32px;">Your email has already been verified. You're all set to go!</p>
-                        <a href="${process.env.FRONTEND_URI}/login" style="display: block; background-color: #1a8cd8; color: #ffffff; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s;">Go to Login</a>
                     </div>
-                </div>
+                </body>
+                </html>
             `
             return res.status(400).send(html)
         }
@@ -363,18 +396,18 @@ export const verifyEmailController = async (req, res) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Email Verified</title>
                 <style>
-                    body, html { margin: 0; padding: 0; height: 100%; background-color: #0d1117; }
+                    body, html { margin: 0; padding: 0; min-height: 100%; background-color: #0d1117; }
                 </style>
             </head>
             <body>
                 <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #ffffff; margin: 0; padding: 20px; box-sizing: border-box;">
-                    <div style="max-width: 400px; width: 100%; margin: auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 40px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); box-sizing: border-box;">
-                        <div style="width: 64px; height: 64px; background: rgba(52, 211, 153, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
-                            <span style="font-size: 32px;">🎉</span>
+                    <div style="max-width: 400px; width: 100%; margin: auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px 20px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); box-sizing: border-box;">
+                        <div style="width: 56px; height: 56px; background: rgba(52, 211, 153, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <span style="font-size: 28px;">🎉</span>
                         </div>
-                        <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #ffffff;">Email Verified!</h1>
-                        <p style="color: #94a3b8; font-size: 16px; margin-bottom: 32px;">Success! Your email has been verified. Welcome to the future of search.</p>
-                        <a href="${process.env.FRONTEND_URI}/login" style="display: block; background-color: #1a8cd8; color: #ffffff; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s;">Go to Login</a>
+                        <h1 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; color: #ffffff;">Email Verified!</h1>
+                        <p style="color: #94a3b8; font-size: 15px; margin-bottom: 28px;">Success! Your email has been verified. Welcome to the future of search.</p>
+                        <a href="${process.env.FRONTEND_URI}/login" style="display: block; background-color: #1a8cd8; color: #ffffff; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 15px; transition: opacity 0.2s;">Go to Login</a>
                     </div>
                 </div>
             </body>
@@ -425,46 +458,54 @@ export const resendVerificationEmailController = async (req, res) => {
             to: email,
             subject: "Welcome to Perplexity! 🤖",
             html: `
-                <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; padding: 40px 20px; color: #ffffff; line-height: 1.6;">
-                    <div style="max-width: 500px; margin: 0 auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 40px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);">
-                        <div style="text-align: center; margin-bottom: 30px;">
-                            <div style="display: inline-flex; align-items: center; gap: 10px;">
-                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #22d3ee, #34d399); border-radius: 50%; display: inline-block; vertical-align: middle; line-height: 40px; text-align: center;">
-                                    <span style="font-size: 20px;">🤖</span>
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body style="margin: 0; padding: 0; background-color: #0d1117;">
+                    <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0d1117; padding: 20px; color: #ffffff; line-height: 1.6;">
+                        <div style="max-width: 500px; width: 100%; margin: 0 auto; background-color: #151c28; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); box-sizing: border-box;">
+                            <div style="text-align: center; margin-bottom: 25px;">
+                                <div style="display: inline-flex; align-items: center; gap: 8px;">
+                                    <div style="width: 36px; height: 36px; background: linear-gradient(135deg, #22d3ee, #34d399); border-radius: 50%; display: inline-block; vertical-align: middle; line-height: 36px; text-align: center;">
+                                        <span style="font-size: 18px;">🤖</span>
+                                    </div>
+                                    <span style="font-size: 20px; font-weight: 700; color: #ffffff; margin-left: 8px; vertical-align: middle;">Perplexity</span>
                                 </div>
-                                <span style="font-size: 24px; font-weight: 700; color: #ffffff; margin-left: 10px; vertical-align: middle;">Perplexity</span>
+                            </div>
+
+                            <h1 style="font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #ffffff; text-align: center;">Welcome back, ${user.username}! 🤵</h1>
+                            
+                            <p style="color: #94a3b8; font-size: 15px; margin-bottom: 25px; text-align: center;">
+                                Thank you for registering at <strong>Perplexity</strong>. We're excited to have you on board! 😍
+                            </p>
+
+                            <p style="color: #94a3b8; font-size: 15px; margin-bottom: 30px; text-align: center;">
+                                Please verify your email address by clicking the button below:
+                            </p>
+
+                            <div style="text-align: center; margin-bottom: 30px;">
+                                <a href="${process.env.BACKEND_URI}/api/v1/auth/verify-email?token=${emailVerificationToken}" 
+                                   style="background-color: #1a8cd8; color: #ffffff; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 15px; display: inline-block; width: 80%; max-width: 250px; box-sizing: border-box;">
+                                   Verify My Email
+                                </a>
+                            </div>
+
+                            <div style="border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 25px; margin-top: 25px;">
+                                <p style="color: #64748b; font-size: 14px; text-align: center; margin: 0;">
+                                    Best regards,<br>
+                                    <strong>The Perplexity Team</strong> 💕
+                                </p>
                             </div>
                         </div>
-
-                        <h1 style="font-size: 22px; font-weight: 600; margin-bottom: 20px; color: #ffffff;">Welcome back, ${user.username}! 🤵</h1>
                         
-                        <p style="color: #94a3b8; font-size: 16px; margin-bottom: 25px;">
-                            Thank you for registering at <strong>Perplexity</strong>. We're excited to have you on board! 😍
-                        </p>
-
-                        <p style="color: #94a3b8; font-size: 16px; margin-bottom: 30px;">
-                            Please verify your email address by clicking the button below:
-                        </p>
-
-                        <div style="text-align: center; margin-bottom: 35px;">
-                            <a href="${process.env.BACKEND_URI}/api/v1/auth/verify-email?token=${emailVerificationToken}" 
-                               style="background-color: #1a8cd8; color: #ffffff; padding: 14px 30px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block;">
-                               Verify My Email
-                            </a>
-                        </div>
-
-                        <div style="border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 25px; margin-top: 30px;">
-                            <p style="color: #64748b; font-size: 14px; margin-top: 25px;">
-                                Best regards,<br>
-                                <strong>The Perplexity Team</strong> 💕
-                            </p>
+                        <div style="text-align: center; margin-top: 20px; color: #4b5563; font-size: 12px;">
+                            © ${new Date().getFullYear()} Perplexity AI. All rights reserved.
                         </div>
                     </div>
-                    
-                    <div style="text-align: center; margin-top: 25px; color: #4b5563; font-size: 12px;">
-                        © ${new Date().getFullYear()} Perplexity AI. All rights reserved.
-                    </div>
-                </div>
+                </body>
+                </html>
             `
         })
 

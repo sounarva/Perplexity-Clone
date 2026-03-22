@@ -30,12 +30,12 @@ const EditChatModal = ({ chatTitle, onClose, onSave }) => {
 
             {/* Modal Card */}
             <div
-                className={`relative w-full max-w-md mx-4 border rounded-2xl shadow-2xl p-6 transition-all duration-300 ${isDarkMode ? 'bg-[#151c28] border-white/10 shadow-black/50' : 'bg-white border-black/10 shadow-[0_0_40px_-5px_rgba(0,0,0,0.1)]'}`}
+                className={`relative w-[90%] max-w-[340px] border rounded-2xl shadow-2xl p-5 md:p-6 transition-all duration-300 ${isDarkMode ? 'bg-[#151c28] border-white/10 shadow-black/50' : 'bg-white border-black/10 shadow-[0_0_40px_-5px_rgba(0,0,0,0.1)]'}`}
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header */}
-                <div className="flex items-center justify-between mb-6">
-                    <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Edit Chat Name</h2>
+                <div className="flex items-center justify-between mb-5">
+                    <h2 className={`text-base font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Edit Chat Name</h2>
                     <button
                         onClick={onClose}
                         disabled={saving}
@@ -61,7 +61,7 @@ const EditChatModal = ({ chatTitle, onClose, onSave }) => {
                     onKeyDown={handleKeyDown}
                     autoFocus
                     disabled={saving}
-                    className={`w-full text-sm py-3 px-4 rounded-lg outline-none border transition-colors mb-6 focus:border-[#1a8cd8]/50 ${isDarkMode ? 'bg-[#1b2432] text-white border-white/5' : 'bg-gray-50 text-gray-900 border-gray-200'} ${saving ? 'opacity-50' : ''}`}
+                    className={`w-full text-[13px] py-2.5 px-3 rounded-lg outline-none border transition-colors mb-5 focus:border-[#1a8cd8]/50 ${isDarkMode ? 'bg-[#1b2432] text-white border-white/5' : 'bg-gray-50 text-gray-900 border-gray-200'} ${saving ? 'opacity-50' : ''}`}
                 />
 
                 {/* Action Buttons */}
@@ -69,14 +69,14 @@ const EditChatModal = ({ chatTitle, onClose, onSave }) => {
                     <button
                         onClick={onClose}
                         disabled={saving}
-                        className={`px-5 py-2 text-sm border rounded-lg transition-colors cursor-pointer ${isDarkMode ? 'text-gray-300 hover:text-white border-white/10 hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 border-gray-200 hover:bg-gray-50'} ${saving ? 'opacity-50 pointer-events-none' : ''}`}
+                        className={`px-4 py-2 text-[13px] border rounded-lg transition-colors cursor-pointer ${isDarkMode ? 'text-gray-300 hover:text-white border-white/10 hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 border-gray-200 hover:bg-gray-50'} ${saving ? 'opacity-50 pointer-events-none' : ''}`}
                     >
                         Cancel
                     </button>
                     <button
                         onClick={handleSave}
                         disabled={saving}
-                        className={`px-5 py-2 text-sm font-medium text-white bg-[#1a8cd8] hover:bg-[#1270b0] transition-colors rounded-lg cursor-pointer ${saving ? 'opacity-50 pointer-events-none' : ''}`}
+                        className={`px-4 py-2 text-[13px] font-medium text-white bg-[#1a8cd8] hover:bg-[#1270b0] transition-colors rounded-lg cursor-pointer ${saving ? 'opacity-50 pointer-events-none' : ''}`}
                     >
                         {saving ? 'Saving...' : 'Save Changes'}
                     </button>

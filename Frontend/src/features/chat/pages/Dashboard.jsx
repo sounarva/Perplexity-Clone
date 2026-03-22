@@ -20,7 +20,7 @@ import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 
 // ─── Sidebar Component ──────────────────────────────────────────────────────
-const Sidebar = ({ user, chats, getMessagesAPI, setIsLogoutModalOpen, editChatAPI, deleteChatAPI, handleNewChat, currentChatId, isDarkMode, onToggleDarkMode }) => {
+const Sidebar = ({ user, chats, getMessagesAPI, setIsLogoutModalOpen, editChatAPI, deleteChatAPI, handleNewChat, currentChatId, isDarkMode, onToggleDarkMode, isMobileOpen, setIsMobileOpen }) => {
     const [editChatId, setEditChatId] = useState(null)
     const [deleteChatId, setDeleteChatId] = useState(null)
     const [width, setWidth] = useState(256) // Initial width (equivalent to w-64)
@@ -67,6 +67,7 @@ const Sidebar = ({ user, chats, getMessagesAPI, setIsLogoutModalOpen, editChatAP
     const handleChatEdit = (e, chatId) => {
         e.stopPropagation()
         setEditChatId(chatId)
+        if (setIsMobileOpen) setIsMobileOpen(false)
     }
 
     const handleSaveChatName = async (newName) => {
@@ -77,6 +78,7 @@ const Sidebar = ({ user, chats, getMessagesAPI, setIsLogoutModalOpen, editChatAP
     const handleChatDelete = (e, chatId) => {
         e.stopPropagation()
         setDeleteChatId(chatId)
+        if (setIsMobileOpen) setIsMobileOpen(false)
     }
 
     const handleConfirmDelete = async () => {
@@ -85,6 +87,12 @@ const Sidebar = ({ user, chats, getMessagesAPI, setIsLogoutModalOpen, editChatAP
     }
     return (
         <>
+            {isMobileOpen !== undefined && (
+                <div 
+                    className={`sidebar-overlay ${isMobileOpen ? 'open' : ''}`}
+                    onClick={() => setIsMobileOpen(false)}
+                />
+            )}
             {editChatId && (
                 <EditChatModal
                     chatTitle={chats[editChatId]?.title || ''}
@@ -99,7 +107,7 @@ const Sidebar = ({ user, chats, getMessagesAPI, setIsLogoutModalOpen, editChatAP
                 />
             )}
             <aside
-                className={`relative shrink-0 flex flex-col h-full border-r ${isDarkMode ? 'border-white/5 bg-[#0d1117]' : 'border-black/5 bg-[#f9f9f9]'}`}
+                className={`sidebar-container ${isMobileOpen ? 'open' : ''} relative shrink-0 flex flex-col h-full border-r ${isDarkMode ? 'border-white/5 bg-[#0d1117]' : 'border-black/5 bg-[#f9f9f9]'}`}
                 style={{ width: `${width}px` }}
             >
                 {/* Drag Handle */}
@@ -187,7 +195,10 @@ const Sidebar = ({ user, chats, getMessagesAPI, setIsLogoutModalOpen, editChatAP
                         </div>
                         <span className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{user?.username}</span>
                         <button
-                            onClick={() => setIsLogoutModalOpen(true)}
+                            onClick={() => {
+                                setIsLogoutModalOpen(true)
+                                if (setIsMobileOpen) setIsMobileOpen(false)
+                            }}
                             className={`ml-auto transition-colors cursor-pointer ${isDarkMode ? 'text-gray-500 hover:text-white' : 'text-gray-400 hover:text-gray-900'}`}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /></svg>
                         </button>
@@ -313,6 +324,7 @@ const Dashboard = () => {
     const prevMsgCountRef = useRef(0)
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
     const [isExporting, setIsExporting] = useState(false)
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -443,7 +455,38 @@ const Dashboard = () => {
     }
 
     return (
-        <div className={`flex h-screen w-full overflow-hidden transition-colors duration-0 ${isDarkMode ? 'bg-[#0f1923]' : 'bg-[#ffffff]'}`}>
+        <div className={`dashboard-container flex flex-col h-screen w-full overflow-hidden transition-colors duration-0 ${isDarkMode ? 'bg-[#0f1923]' : 'bg-[#ffffff]'}`}>
+            {/* Mobile Top Bar */}
+            <nav className={`mobile-top-bar w-full shrink-0 flex items-center justify-between px-4 py-3 border-b md:hidden ${isDarkMode ? 'bg-[#0f1923] border-white/5' : 'bg-[#ffffff] border-black/5'}`}>
+                <div className="flex items-center gap-3">
+                    <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-[#1a8cd8]">
+                        <path d="M24 45.8096C19.6865 45.8096 15.4698 44.5305 11.8832 42.134C8.29667 39.7376 5.50128 36.3314 3.85056 32.3462C2.19985 28.361 1.76794 23.9758 2.60947 19.7452C3.451 15.5145 5.52816 11.6284 8.57829 8.5783C11.6284 5.52817 15.5145 3.45101 19.7452 2.60948C23.9758 1.76795 28.361 2.19986 32.3462 3.85057C36.3314 5.50129 39.7376 8.29668 42.134 11.8833C44.5305 15.4698 45.8096 19.6865 45.8096 24L24 24L24 45.8096Z"></path>
+                    </svg>
+                    <span className={`font-semibold text-base tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Perplexity</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    {currentChatId && (
+                        <button
+                            onClick={handleExportPDF}
+                            disabled={isExporting}
+                            className={`text-[11px] sm:text-xs font-medium py-1.5 px-2.5 rounded-md border shadow-sm transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 ${isDarkMode ? 'bg-[#1b2432] hover:bg-[#243044] text-gray-300 hover:text-white border-white/5' : 'bg-white hover:bg-gray-50 text-gray-600 hover:text-gray-900 border-black/10'}`}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
+                            {isExporting ? 'Saving...' : 'Save PDF'}
+                        </button>
+                    )}
+                    <button 
+                        onClick={() => setIsMobileSidebarOpen(true)}
+                        className={`p-2 rounded-md transition-colors cursor-pointer ${isDarkMode ? 'text-gray-300 hover:bg-white/10' : 'text-gray-600 hover:bg-black/5'}`}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    </button>
+                </div>
+            </nav>
+
+            {/* Inner row container for Sidebar and Main content */}
+            <div className="flex-1 flex overflow-hidden relative">
+
             {isLogoutModalOpen && (
                 <Logout
                     onClose={() => setIsLogoutModalOpen(false)}
@@ -462,6 +505,8 @@ const Dashboard = () => {
                 currentChatId={currentChatId}
                 isDarkMode={isDarkMode}
                 onToggleDarkMode={handleToggleTheme}
+                isMobileOpen={isMobileSidebarOpen}
+                setIsMobileOpen={setIsMobileSidebarOpen}
             />
 
             {/* Main Chat Area */}
@@ -475,8 +520,8 @@ const Dashboard = () => {
             ) : (
                 <main className="relative flex-1 flex flex-col h-full min-w-0 z-0">
 
-                    {/* Save to PDF Button */}
-                    <div className="absolute top-4 left-6 z-10">
+                    {/* Save to PDF Button (Desktop View) */}
+                    <div className="hidden md:block absolute top-4 left-6 z-10">
                         <button
                             onClick={handleExportPDF}
                             disabled={isExporting}
@@ -506,6 +551,7 @@ const Dashboard = () => {
                     <ChatInput value={inputValue} onChange={setInputValue} onSend={handleSend} isDarkMode={isDarkMode} />
                 </main>
             )}
+            </div>
         </div>
     )
 }
